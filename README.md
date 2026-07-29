@@ -1,64 +1,195 @@
-🎭 Sentiment Analyser
-An end-to-end sentiment classification application that predicts the positive or negative sentiment of movie reviews. The project features a full machine learning pipeline (text preprocessing, EDA generation, TF-IDF vectorization, and Logistic Regression classification) and exposes it via an interactive, modern Streamlit dashboard.
+# 🎭 Sentiment Analyser
 
-📂 Project Structure
-Sentiment Analyser/
-│
-├── dataset/
-│   ├── IMDB Dataset.csv         <- [User Downloaded] Original 50k IMDB dataset
-│   └── cleaned_dataset.csv      <- Preprocessed dataset (generated during training)
-│
-├── Images/
-│   ├── class_distribution.png   <- EDA: Bar plot of sentiments
-│   ├── wordcloud_positive.png   <- EDA: Positive review word cloud
-│   └── wordcloud_negative.png   <- EDA: Negative review word cloud
-│
-├── models/
-│   ├── sentiment_model.pkl      <- Trained Logistic Regression model
-│   └── tfidf_vectorizer.pkl     <- Fitted TF-IDF Vectorizer
-│
-├── notebook/
-│   └── sentiment_analysis.ipynb <- Step-by-step pipeline notebook
-│
-├── app.py                       <- Streamlit application code
-├── model.py                     <- Standalone training and pipeline script
-├── README.md                    <- Project documentation
-└── requirements.txt             <- Project dependencies
-🚀 Getting Started
-1. Clone the repository and navigate to it:
-git clone <repository-url>
-cd "Sentiment Analyser"
-2. Download the Dataset
-Download the IMDB Dataset of 50K Movie Reviews from Kaggle: 👉 Kaggle Dataset Link
+An end-to-end **NLP-based Sentiment Classification System** that predicts whether a movie review is **Positive 😊 or Negative 😞** using Machine Learning.
 
-Place the downloaded IMDB Dataset.csv inside the dataset/ folder: dataset/IMDB Dataset.csv
+This project implements a complete Natural Language Processing pipeline including text preprocessing, exploratory data analysis, feature extraction, model training, and deployment using Streamlit.
 
-Note: If you launch the app or training script without the dataset, a small mock dataset of 100 sample reviews will be automatically generated so you can try out the application immediately!
+---
 
-3. Install Dependencies
-Make sure you have Python 3.9+ installed, then install the required libraries:
+# 🚀 Features
 
+✅ Sentiment prediction from user review text  
+✅ Complete NLP preprocessing pipeline  
+✅ TF-IDF feature extraction  
+✅ Logistic Regression classification model  
+✅ Interactive Streamlit web application  
+✅ Exploratory Data Analysis (EDA)  
+✅ WordCloud visualization  
+✅ Saved ML model and vectorizer  
+
+---
+
+# 🧠 Machine Learning Workflow
+
+```
+Raw Movie Review
+        |
+        ↓
+Text Cleaning & Preprocessing
+        |
+        ↓
+Tokenization
+        |
+        ↓
+TF-IDF Vectorization
+        |
+        ↓
+Logistic Regression Model
+        |
+        ↓
+Sentiment Prediction
+```
+
+---
+
+# 📂 Project Structure
+
+```
+Sentiment-Analyser-main
+│
+├── Dataset
+│   └── cleaned_dataset.csv
+│
+├── Images
+│   ├── class_distribution.png
+│   ├── wordcloud_positive.png
+│   └── wordcloud_negative.png
+│
+├── models
+│   ├── sentiment_model.pkl
+│   └── tfidf_vectorizer.pkl
+│
+├── notebook
+│   └── sentiment_analysis.ipynb
+│
+├── app.py
+├── model.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# 📊 Exploratory Data Analysis
+
+## 📌 Sentiment Distribution
+
+<img src="./Images/class_distribution.png" width="700">
+
+
+## ☁️ Positive Reviews Word Cloud
+
+<img src="./Images/wordcloud_positive.png" width="700">
+
+
+## ☁️ Negative Reviews Word Cloud
+
+<img src="./Images/wordcloud_negative.png" width="700">
+
+
+---
+
+# 🛠️ Tech Stack
+
+## Programming Language
+- Python
+
+## Machine Learning
+- Scikit-Learn
+- Logistic Regression
+- TF-IDF Vectorizer
+
+## Data Processing
+- Pandas
+- NumPy
+
+## Visualization
+- Matplotlib
+- WordCloud
+
+## Deployment
+- Streamlit
+
+---
+
+# ⚙️ Installation & Setup
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/Tusharsingh011/Sentiment-Analyser-main.git
+```
+
+### 2. Navigate to Project Folder
+
+```bash
+cd Sentiment-Analyser-main
+```
+
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
-4. Train the Model
-Run the training script to preprocess the data, train the classifier, generate EDA plots, and save the model assets:
+```
 
-python model.py
-5. Launch the Web Dashboard
-Start the Streamlit application:
+### 4. Run Streamlit Application
 
+```bash
 streamlit run app.py
-Open your browser and navigate to the local address provided (typically http://localhost:8501).
+```
 
-🛠️ Machine Learning Pipeline Details
-Preprocessing:
+---
 
-Strips HTML tags (e.g. <br />).
-Converts text to lowercase.
-Removes special characters, numbers, and punctuation.
-Filters out common English stopwords.
-Feature Extraction:
+# 💻 Application Preview
 
-TF-IDF (Term Frequency - Inverse Document Frequency) with Unigram and Bigram features (ngram_range=(1, 2)) capped at 10,000 features.
-Classification Model:
+### Enter a movie review:
 
-Logistic Regression model (C=1.0), achieving ~89.4% accuracy on the 50K IMDB Movie Reviews test set.
+Example:
+
+```
+The movie was amazing and the acting was brilliant.
+```
+
+### Prediction:
+
+```
+Positive 😊
+```
+
+---
+
+Example:
+
+```
+The movie was boring and disappointing.
+```
+
+### Prediction:
+
+```
+Negative 😞
+```
+
+---
+
+# 🔮 Future Improvements
+
+🚀 Implement advanced Transformer models like BERT  
+🚀 Real-time social media sentiment monitoring  
+🚀 Multi-class emotion detection  
+🚀 Cloud deployment using AWS / Azure / Streamlit Cloud  
+🚀 Improve accuracy using deep learning approaches  
+
+---
+
+# 👨‍💻 Author
+
+**Tushar Singh**
+
+Computer Science Engineering
+
+AI | Machine Learning | Data Analytics
+
+---
+
+⭐ If you found this project useful, consider giving it a star!
