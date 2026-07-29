@@ -1,86 +1,232 @@
+<div align="center">
+
 # 🎭 Sentiment Analyser
 
-An end-to-end sentiment classification application that predicts the positive or negative sentiment of movie reviews. The project features a full machine learning pipeline (text preprocessing, EDA generation, TF-IDF vectorization, and Logistic Regression classification) and exposes it via an interactive, modern Streamlit dashboard.
+### End-to-End NLP Pipeline for Movie Review Sentiment Classification
+
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](#-license)
+
+*Clean movie reviews → explore the data → train a TF‑IDF + Logistic Regression classifier → ship it in an interactive app.*
+
+</div>
 
 ---
 
-## 📂 Project Structure
+## 📖 Overview
+
+**Sentiment Analyser** is a complete, from-scratch NLP pipeline that classifies IMDB movie reviews as **positive** or **negative**. It covers the full workflow you'd expect in a real project:
+
+- 🧹 Text cleaning (HTML tag removal, punctuation stripping, stopword filtering)
+- 📊 Exploratory data analysis with class distribution plots and word clouds
+- ⚡ Feature extraction using **TF-IDF** (unigrams + bigrams)
+- 🏋️ Model training with **Logistic Regression**
+- 🎯 Evaluation with accuracy, precision/recall, and a classification report
+- 💾 Model persistence for downstream use (e.g. a Streamlit app)
+
+The project ships both as a **guided Jupyter notebook** (`sentiment_analysis.ipynb`) for exploration, and a **reusable script** (`model.py`) for reproducible, one-command pipeline runs.
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| 🧼 Text Preprocessing | Strips HTML, lowercases, removes punctuation/numbers, filters NLTK stopwords |
+| 📈 EDA Visualizations | Sentiment class distribution + positive/negative word clouds |
+| 🔤 TF-IDF Vectorization | Up to 10,000 features, unigrams & bigrams (`ngram_range=(1, 2)`) |
+| 🤖 Model | Logistic Regression classifier (`max_iter=1000`) |
+| 📦 Artifacts | Trained model & vectorizer pickled for reuse in apps |
+| 🖼️ Auto-generated Plots | Saved to `Images/` for easy sharing in reports/READMEs |
+
+---
+
+## 🗂️ Project Structure
 
 ```
-Sentiment Analyser/
-│
+sentiment-analyser/
 ├── dataset/
-│   ├── IMDB Dataset.csv         <- [User Downloaded] Original 50k IMDB dataset
-│   └── cleaned_dataset.csv      <- Preprocessed dataset (generated during training)
-│
-├── Images/
-│   ├── class_distribution.png   <- EDA: Bar plot of sentiments
-│   ├── wordcloud_positive.png   <- EDA: Positive review word cloud
-│   └── wordcloud_negative.png   <- EDA: Negative review word cloud
-│
+│   ├── IMDB Dataset.csv          # Raw dataset (download separately, see below)
+│   └── cleaned_dataset.csv       # 1,000-row cleaned sample (auto-generated)
 ├── models/
-│   ├── sentiment_model.pkl      <- Trained Logistic Regression model
-│   └── tfidf_vectorizer.pkl     <- Fitted TF-IDF Vectorizer
-│
-├── notebook/
-│   └── sentiment_analysis.ipynb <- Step-by-step pipeline notebook
-│
-├── app.py                       <- Streamlit application code
-├── model.py                     <- Standalone training and pipeline script
-├── README.md                    <- Project documentation
-└── requirements.txt             <- Project dependencies
+│   ├── sentiment_model.pkl       # Trained Logistic Regression model
+│   └── tfidf_vectorizer.pkl      # Fitted TF-IDF vectorizer
+├── Images/
+│   ├── class_distribution.png
+│   ├── wordcloud_positive.png
+│   └── wordcloud_negative.png
+├── notebooks/
+│   └── sentiment_analysis.ipynb  # Step-by-step exploratory notebook
+├── model.py                      # End-to-end training pipeline script
+└── README.md
+```
+
+
+---
+
+## 🧠 How It Works
+
+```mermaid
+flowchart LR
+    A["📖 Load IMDB<br/>Dataset"] --> B["🧹 Clean Text<br/>(HTML, punctuation,<br/>stopwords)"]
+    B --> C["📊 EDA<br/>(distribution +<br/>word clouds)"]
+    C --> D["✂️ Train/Test<br/>Split (80/20)"]
+    D --> E["🔤 TF-IDF<br/>Vectorization"]
+    E --> F["🏋️ Train Logistic<br/>Regression"]
+    F --> G["🎯 Evaluate<br/>(accuracy, report)"]
+    G --> H["💾 Save Model<br/>+ Vectorizer"]
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Clone the repository and navigate to it:
+### 1. Clone the repository
+
 ```bash
-git clone <repository-url>
-cd "Sentiment Analyser"
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
 ```
 
-### 2. Download the Dataset
-Download the **IMDB Dataset of 50K Movie Reviews** from Kaggle:
-👉 [Kaggle Dataset Link](https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews)
+### 2. Set up a virtual environment
 
-Place the downloaded `IMDB Dataset.csv` inside the `dataset/` folder:
-`dataset/IMDB Dataset.csv`
+```bash
+python -m venv venv
+source venv/bin/activate      # On Windows: venv\Scripts\activate
+```
 
-> **Note:** If you launch the app or training script without the dataset, a small mock dataset of 100 sample reviews will be automatically generated so you can try out the application immediately!
+### 3. Install dependencies
 
-### 3. Install Dependencies
-Make sure you have Python 3.9+ installed, then install the required libraries:
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn wordcloud nltk
+```
+
+Or, if you maintain a `requirements.txt`:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Train the Model
-Run the training script to preprocess the data, train the classifier, generate EDA plots, and save the model assets:
+### 4. Download the dataset
+
+This project uses the **[IMDB Dataset of 50K Movie Reviews](https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews)** from Kaggle.
+
+Download it and place it here:
+
+```
+dataset/IMDB Dataset.csv
+```
+
+### 5. Run the pipeline
+
 ```bash
 python model.py
 ```
 
-### 5. Launch the Web Dashboard
-Start the Streamlit application:
+This will:
+1. Load and clean the dataset
+2. Save EDA plots to `Images/`
+3. Save a cleaned 1,000-row sample to `dataset/cleaned_dataset.csv`
+4. Train and evaluate the Logistic Regression model
+5. Save `sentiment_model.pkl` and `tfidf_vectorizer.pkl` to `models/`
+
+Alternatively, open the notebook for a guided, cell-by-cell walkthrough:
+
 ```bash
-streamlit run app.py
+jupyter notebook notebooks/sentiment_analysis.ipynb
 ```
-Open your browser and navigate to the local address provided (typically `http://localhost:8501`).
 
 ---
 
-## 🛠️ Machine Learning Pipeline Details
+## 🔮 Using the Trained Model
 
-1. **Preprocessing:** 
-   - Strips HTML tags (e.g. `<br />`).
-   - Converts text to lowercase.
-   - Removes special characters, numbers, and punctuation.
-   - Filters out common English stopwords.
+```python
+import pickle
 
-2. **Feature Extraction:**
-   - **TF-IDF (Term Frequency - Inverse Document Frequency)** with Unigram and Bigram features (`ngram_range=(1, 2)`) capped at `10,000` features.
+# Load the saved artifacts
+with open("models/sentiment_model.pkl", "rb") as f:
+    model = pickle.load(f)
 
-3. **Classification Model:**
-   - **Logistic Regression** model (`C=1.0`), achieving **~89.4% accuracy** on the 50K IMDB Movie Reviews test set.
+with open("models/tfidf_vectorizer.pkl", "rb") as f:
+    vectorizer = pickle.load(f)
+
+# Predict on new text (remember to run it through the same clean_text() function first)
+review = "This movie was an absolute masterpiece, I loved every second of it!"
+vectorized = vectorizer.transform([review])
+prediction = model.predict(vectorized)[0]
+
+print("Positive 👍" if prediction == 1 else "Negative 👎")
+```
+
+---
+
+## 📊 Example Outputs
+
+The pipeline automatically generates the following visualizations in `Images/`:
+
+| Plot | Description |
+|---|---|
+| `class_distribution.png` | Bar chart of positive vs. negative review counts |
+| `wordcloud_positive.png` | Most frequent words in positive reviews |
+| `wordcloud_negative.png` | Most frequent words in negative reviews |
+
+*(Embed screenshots here once available, e.g. `![Class Distribution](Images/class_distribution.png)`)*
+
+---
+
+## 🛠️ Tech Stack
+
+- **Language:** Python 3.9+
+- **Data Handling:** pandas, numpy
+- **Visualization:** matplotlib, seaborn, wordcloud
+- **NLP:** NLTK (stopwords)
+- **Machine Learning:** scikit-learn (TF-IDF, Logistic Regression)
+- **Interface:** Streamlit *(optional companion app)*
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Add a `requirements.txt` / `environment.yml`
+- [ ] Try additional models (SVM, Naive Bayes, transformer-based embeddings)
+- [ ] Add hyperparameter tuning (GridSearchCV)
+- [ ] Deploy the Streamlit app publicly
+- [ ] Add unit tests for `clean_text()` and the pipeline
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 🙏 Acknowledgements
+
+- [IMDB Dataset of 50K Movie Reviews](https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews) — Kaggle
+- [scikit-learn](https://scikit-learn.org/) documentation and community
+- [NLTK](https://www.nltk.org/) for stopword corpora
+ 
+ ---
+ 
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+## AUTHOR = ** Tushar Singh **
+
+<div align="center">
+
+Made with 🍿 and a bit of Logistic Regression
+
+</div>
