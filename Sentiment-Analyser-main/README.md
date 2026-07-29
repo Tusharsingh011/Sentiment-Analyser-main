@@ -86,8 +86,8 @@ flowchart LR
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/<Tusharsingh011>/<Sentiment-analyser-main>.git
+cd <Sentiment-analyser-main>
 ```
 
 ### 2. Set up a virtual environment
