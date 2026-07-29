@@ -1,0 +1,16 @@
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Only ignore the raw large 50K IMDB dataset (models and cleaned dataset will be pushed for deployment)
+dataset/IMDB Dataset.csv
